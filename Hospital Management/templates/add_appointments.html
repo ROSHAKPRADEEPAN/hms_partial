@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Appointment Slots</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 30px;
+        }
+
+        .form-container {
+            display: inline-block;
+            background-color: #ffffff;
+            padding: 16px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-container h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        input[type="date"],
+        input[type="time"] {
+            padding: 6px 8px;
+            width: 150px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 0 10px 10px 0;
+            font-size: 14px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .slots-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .slot-card {
+            background-color: #ffffff;
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 200px;
+        }
+        .slot-card p {
+            margin: 6px 0;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+            padding: 6px 12px;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .back-btn {
+            background-color: #2ecc71;
+            margin-top: 30px;
+        }
+
+        .back-btn:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h3>Add Slot</h3>
+        <form method="POST">
+            <div class="form-row">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-row">
+                <label for="time">Time:</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+            <div class="form-row">
+                <button type="submit">Add Slot</button>
+            </div>
+        </form>
+    </div>
+
+    <h3 style="color: #2c3e50;">Available Slots</h3>
+    <div class="slots-wrapper">
+        {% for slot in slots %}
+        <div class="slot-card">
+            <p><strong>Slot ID:</strong> {{ slot[0] }}</p>
+            <p><strong>Date:</strong> {{ slot[1] }}</p>
+            <p><strong>Time:</strong> {{ slot[2] }}</p>
+            <form method="POST" action="{{ url_for('delete_slot', slot_id=slot[0]) }}" onsubmit="return confirm('Delete this slot?');">
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
+        {% else %}
+        <p>No slots added yet.</p>
+        {% endfor %}
+    </div>
+
+    <a href="/doctor"><button class="back-btn">Back to Dashboard</button></a>
+
+</body>
+</html>

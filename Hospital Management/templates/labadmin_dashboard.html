@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f3;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .actions a {
+            display: block;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        .actions a:hover {
+            background-color: #0056b3;
+        }
+        .logout {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .logout a {
+            color: red;
+            text-decoration: none;
+        }
+        .logout a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome, Lab Admin {{ session['username'] }}</h2>
+
+        <div class="actions">
+            <a href="/labadmin/upload">➕ Upload Medical History</a>
+            <a href="{{ url_for('labadmin_view_patients') }}">👨‍⚕️ View Patients</a>
+        </div>
+
+        <div class="logout">
+            <p><a href="/logout">🚪 Logout</a></p>
+        </div>
+    </div>
+</body>
+</html>

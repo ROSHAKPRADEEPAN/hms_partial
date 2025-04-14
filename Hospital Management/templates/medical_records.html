@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Medical Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 90%;
+            margin: auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e2e6ea;
+        }
+
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px auto;
+            text-align: center;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        a.button:hover {
+            background-color: #218838;
+        }
+
+        .back-btn-container {
+            text-align: center;
+        }
+        .view-link {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .view-link:hover {
+            background-color: #218838;
+        }
+
+        .iframe-container {
+        width: 100%; /* Adjust to fit the table cell */
+        height: 300px; /* Set a fixed height */
+        overflow: hidden;
+    }
+    .iframe-container iframe {
+        width: 100%; /* Ensure the iframe takes the full width of the container */
+        height: 100%; /* Ensure the iframe takes the full height of the container */
+        border: none;
+    }
+    </style>
+</head>
+<body>
+    <h1>All Patient Medical Records</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Record ID</th>
+                <th>USERNAME</th>
+                <th>Scan and Report Preview</th>
+                <th>Normal Report Preview</th>
+                <th>Upload Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.id }}</td>
+                <td>{{ record.username }}</td>
+                <td>
+                    {% if record.scan_and_report %}
+                        <div class="iframe-container">
+                            <iframe src="{{ record.scan_and_report }}" frameborder="0"></iframe>
+                        </div>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>
+                    {% if record.normal_report %}
+                        <div class="iframe-container">
+                            <iframe src="{{ record.normal_report }}" frameborder="0"></iframe>
+                        </div>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>{{ record.upload_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="back-btn-container">
+        <a href="{{ url_for('admin_dashboard') }}" class="button">Back to Dashboard</a>
+    </div>
+</body>
+</html>

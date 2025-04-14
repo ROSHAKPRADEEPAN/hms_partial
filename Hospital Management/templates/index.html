@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #1d36c0;
+            padding-bottom: 5px;
+        }
+        a.login-btn {
+            display: block;
+            width: 200px;
+            text-align: center;
+            margin: 20px auto;
+            background-color: #1951c9;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        a.login-btn:hover {
+            background-color: #0d335e;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-left: 5px solid #2a75d6;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Our Hospital</h1>
+        <a href="/login" class="login-btn">Login</a>
+
+        <h2>Doctors Available</h2>
+        <ul>
+            {% for doctor in doctors %}
+                <li><strong>{{ doctor[0] }}</strong> – {{ doctor[1] }} ({{ doctor[2] }} yrs experience)</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

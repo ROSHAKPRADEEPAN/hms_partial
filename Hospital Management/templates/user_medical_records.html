@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Medical Records</title>
+    <style>
+        .file-container img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin: 5px;
+        }
+        .file-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        iframe {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Medical Records</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Scan and Report</th>
+                <th>Normal Report</th>
+                <th>Upload Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>
+                    <div class="file-container">
+                        {% for url in record.scan_files %}
+                        {% if url.endswith('.jpg') or url.endswith('.jpeg') or url.endswith('.png') or url.endswith('.gif') %}
+                        <!-- Display image files -->
+                        <a href="{{ url }}" target="_blank">
+                            <img src="{{ url }}" alt="Scan File" style="width: 100px; height: 100px;">
+                        </a>
+                        {% elif url.endswith('.pdf') %}
+                        <!-- Display PDF files -->
+                        <div>
+                            <iframe src="{{ url }}" width="300" height="200"></iframe>
+                            <p><a href="{{ url }}" target="_blank">Open PDF</a></p>
+                            <p><a href="{{ url }}" download>Download PDF</a></p>
+                        </div>
+                        {% else %}
+                        <!-- Fallback for unsupported file types -->
+                        <p><a href="{{ url }}" target="_blank">View File</a></p>
+                        {% endif %}
+                        {% endfor %}
+                        {% if not record.scan_files %}
+                        <p>No scan files available.</p>
+                        {% endif %}
+                    </div>
+                </td>
+                <td>
+                    <div class="file-container">
+                        {% for url in record.report_files %}
+                        {% if url.endswith('.jpg') or url.endswith('.jpeg') or url.endswith('.png') or url.endswith('.gif') %}
+                        <!-- Display image files -->
+                        <a href="{{ url }}" target="_blank">
+                            <img src="{{ url }}" alt="Report File" style="width: 100px; height: 100px;">
+                        </a>
+                        {% elif url.endswith('.pdf') %}
+                        <!-- Display PDF files -->
+                        <div>
+                            <iframe src="{{ url }}" width="300" height="200"></iframe>
+                            <p><a href="{{ url }}" target="_blank">Open PDF</a></p>
+                            <p><a href="{{ url }}" download>Download PDF</a></p>
+                        </div>
+                        {% else %}
+                        <!-- Fallback for unsupported file types -->
+                        <p><a href="{{ url }}" target="_blank">View File</a></p>
+                        {% endif %}
+                        {% endfor %}
+                        {% if not record.report_files %}
+                        <p>No report files available.</p>
+                        {% endif %}
+                    </div>
+                </td>
+                <td>{{ record.upload_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
